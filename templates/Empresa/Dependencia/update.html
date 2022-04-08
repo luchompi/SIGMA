@@ -1,0 +1,71 @@
+{% extends "base/body.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Detalles de Dependencia - SIGMA
+{% endblock title %}
+{% block header %}
+<h1>Detalles de la Dependencia {{query.dependencia}}</h1>
+{% endblock header %}
+
+
+{% block content %}
+<div class="container-fluid">
+<div class="row">
+  <div class="col">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Detalles de la Dependencia</h3>
+      </div>
+      <div class="card-body">
+      <h4>fecha de creación:</h4>
+      <p>{{query.timestamps}}</p>
+      <p>Para eliminarla, haga clic en <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
+        Borrar
+      </button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Actualizar Dependencia</h3>
+      </div>
+      <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {{form.dependencia|as_crispy_field}}
+        <button type="submit" class="btn btn-success" name="button">Actualizar</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Borrar Dependencia</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Está a punto de eliminar esta sede del sistema</h4>
+        <p>Tenga en cuenta que este proceso <strong>NO SE PUEDE DESHACER</strong></p>
+        <p>¿Continuar?</p>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancelar</button>
+        <a href="{% url 'empresa:dependenciaDel' query.id %}" class="btn btn-danger">Sí, Eliminar</a>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends "base/body.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Agregar Proveedor - SIGMA
+{% endblock title %}
+
+
+{% block header %}
+    <h1>Agregar Proveedor Nuevo</h1>
+{% endblock header %}
+
+{% block content %}
+    <div class="container-fluid">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <h4><i class="far fa-user"></i> Datos del Proveedor</h4>
+            <div class="row">
+                <div class="col">
+                    {{form.NIT|as_crispy_field}}
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col">
+                    {{form.razonSocial|as_crispy_field}}
+                    </div>
+                    <div class="col">
+                    {{form.direccion|as_crispy_field}}
+                    </div>
+                   
+                </div>
+                 <div class="row">
+                   <div class="col">
+                        {{form.telefono1|as_crispy_field}}
+                    </div>
+                    <div class="col">
+                        {{form.telefono2|as_crispy_field}}
+                    </div>
+                    <div class="col">
+                        {{form.correo|as_crispy_field}}                                                
+                    </div>
+                    </div>
+            <div class="row"> 
+            	<h4><i class="far  fa-building"></i>Datos de Punto de venta</h4>
+            </div>
+            <div class="row">
+            	<div class="col">
+                    {{form.dir_venta|as_crispy_field}}
+                </div>
+                <div class="col">
+                	{{form.vendedor|as_crispy_field}}
+                </div>
+                <div class="col">
+                	{{form.tel_vendedor|as_crispy_field}}
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Crear Proveedor</button>
+    </form>
+</div>
+{% endblock content %}

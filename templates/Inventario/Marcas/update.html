@@ -1,0 +1,105 @@
+{% extends "base/body.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+Marcas - SIGMA
+{% endblock title %}
+
+{% block header %}
+<h1>Detalles de la Marca <a href="{% url 'inventario:marcaModel' object.id %}" class="btn btn-primary">Explorar Modelos</a></h1>
+{% endblock header %}
+
+{% block content %}
+<link href="{% static 'select2.min.css' %}" rel="stylesheet" />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+       <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Detalles de la marca </h3>
+        </div>
+        <div class="card-body">
+
+          <p>Nombre : {{object.marca}}</p>
+          <p>Para eliminar este registro, haga clic en <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
+            Borrar
+          </button></p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Actualizar datos</h3>
+      </div>
+      <div class="card-body">
+        <h4>Ingrese datos nuevos</h4>
+        <form method="POST">
+          {% csrf_token %}
+          {{form|crispy}}
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-confirm">
+            Actualizar
+          </button>
+          <div class="modal fade" id="modal-confirm">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Actualizar Funcionario</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>Está a punto de Actualizar estos registro del sistema</h4>
+                  <p>Tenga en cuenta que este proceso <strong>NO SE PUEDE DESHACER</strong></p>
+                  <p>¿Continuar?</p>
+                  <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Sí, Actualizar</a>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Borrar Marca</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>Está a punto de eliminar esta Marca del sistema</h4>
+            <h6>Se borrarán todos los registros conexos a esta</h6>
+            <p>Tenga en cuenta que este proceso <strong>NO SE PUEDE DESHACER</strong></p>
+            <p>¿Continuar?</p>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancelar</button>
+              <a href="{% url 'inventario:marcaDelete' object.id %}" class="btn btn-danger">Sí, Eliminar</a>
+            </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+  <script src="{% static 'dist/js/select2.js' %}"></script>
+  <script src="{% static 'select2.min.js' %}"></script>
+{% endblock js %}

@@ -1,0 +1,21 @@
+{% extends "base/body.html" %}
+{% block title %}Error en el sistema{% endblock title %}
+{% block header %}
+<div class="error-page">
+  <h2 class="headline text-danger">500</h2>
+
+  <div class="error-content">
+    <h3><i class="fas fa-exclamation-triangle text-danger"></i> Error 500: Problemas de proceso</h3>
+
+  </div>
+</div>
+
+{% endblock header %}
+{% block content %}
+<p>
+  Ha sido imposible procesar la petición, intente de nuevo.
+</p>
+<p>
+  Si ya vió este error anteriormente, intentelo más tarde
+</p>
+{% endblock content %}

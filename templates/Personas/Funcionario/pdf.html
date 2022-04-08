@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reporte de funcionario</title>
+	<link rel="stylesheet" href="{% static 'dist/fonts/font.css' %}">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+	<style>
+		body {font-family: arial;}
+		h1 {font-size: 20px;}
+		h2 {font-size: 18px;}
+		h3 {font-size: 15px;}
+		p {font-size: 15px;}
+		th {font-size:  15px;}
+		td {font-size: 15px;}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 >Reporte de datos en sistema de {{query.identificacion}} : {{query.nombres}} {{query.apellidos}}</h1>
+		<hr class="dropdown-divider">
+		<p>De conformidad a lo establecido en el <strong>Art. 15 de la ley 1266 del 2008</strong> (HABEAS DATA),</p>
+		<p>La oficina de sistemas se digna en reportarle que, los datos relacionados a continuacion, son los que reposan en los registros de funcionarios del <strong>Sistema Integrado para la Gestion por modulos de activos - SIGMA</strong> y, por lo tanto, segun lo establecido por la ley, usted tiene derecho a conocer la informacion recopilada por el sistema y a actualizarla y/o rectificarla.</p>
+		<h2>Datos de Usuario</h2>
+		<hr class="dropdown-divider">
+		<table class="table table-bordered border-primary">
+		  <thead>
+		  	<th>Nombres</th>
+		  	<th>Apellidos</th>
+		  	<th>Telefono de contacto</th>
+		  	<th>Direccion</th>
+		  </thead>
+		  <tbody>
+		  	<tr>
+		  		<td>
+		  			{{query.nombres}}
+		  		</td>
+		  		<td>{{query.apellidos}}</td>
+		  		<td>{{query.telefono}}</td>
+		  		<td>{{query.direccion}}</td>
+		  	</tr>
+		  </tbody>
+		</table>
+		<hr class="dropdown-divider">
+		<table class="table table-bordered border-primary">
+		  <thead>
+		  	<th>Sede en la que labora</th>
+		  	<th>Dependencia a la que esta adscrito</th>
+		  	
+		  </thead>
+		  <tbody>
+		  	<tr>
+		  		<td>
+		  			{{query.sede.sede}}
+		  		</td>
+		  		<td>{{query.sede.dependencia}}</td>
+		  	</tr>
+		  </tbody>
+		</table>
+		<hr class="dropdown-divider">
+		<p>Tenga en cuenta, que estos datos seran eliminados una vez finalice su contrato con la entidad y, de ser reincorporado, sus datos seran solicitados nuevamente para fines de ejecucion de las tareas de la oficina de sistemas.</p>
+	</div>
+	<div class="container">
+		<div class="row">
+			
+		</div>
+		<div class="row">
+			<p>Para mayor informacion, pongase en contacto con la oficina de sistemas.</p>
+		</div>
+		<div class="row">
+			
+		</div>
+	</div>
+</body>
+<footer align="bottom"><p>Reporte elaborado automaticamente el {{timestamps}} por {{usuario.username}}</p></footer>
+</html>

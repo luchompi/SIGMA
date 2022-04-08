@@ -1,0 +1,106 @@
+{% extends "base/body.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Modelos - SIGMA
+{% endblock title %}
+
+{% block header %}
+    <h1>Modelos asociados a la marca {{object.marca}}</h1>
+{% endblock header %}
+
+{% block content %}
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Listado de Modelos <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
+		      Añadir
+		    </button></h3>
+		     
+    </div>
+    <div class="card-body">
+    	{% if data %}
+    	<table id="datos" class="table table-striped table-hover table-bordered">
+        <thead>
+            <th>ID</th>
+            <th>Nombre del Modelo</th>
+            <th>Timestamps</th>
+            <th>Opciones</th>
+        </thead>
+        <tbody>
+
+                {% for row in data  %}
+                <tr>
+                    <th scope="row" >{{row.id}} </th>
+                    <td>{{row.modelo}}</td>
+                    <td>{{row.timestamps}}</td>
+                    <td> <a href="{% url 'inventario:delMarcaModel' object.id row.id %}" class="btn btn-danger">Borrar <i class="nav-icon fas fa-search"></i></a>
+                    </td>
+                </tr>
+                
+                {% endfor %}
+        </tbody>
+    </table>
+    	    
+    	{% else %}
+    	    <p>No existen Registros!</p>
+    	{% endif %}
+    </div>
+</div>
+
+<div class="modal fade" id="modal-default">
+		      <div class="modal-dialog">
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <h4 class="modal-title">Agregar Modelo</h4>
+		            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		              <span aria-hidden="true">&times;</span>
+		            </button>
+		          </div>
+		          <div class="modal-body">
+		            <form  method="post">
+		              {% csrf_token %}
+		              {{form|crispy}}
+
+		          </div>
+		          <div class="modal-footer justify-content-between">
+		            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            <button type="submit" class="btn btn-success">Guardar</button>
+		          </div>
+		          </form>
+		        </div>
+		      </div>
+		    </div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js'%}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js'%}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js'%}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js'%}"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+    $('#datos').DataTable();
+  });
+</script>
+{% endblock js %}

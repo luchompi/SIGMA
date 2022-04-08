@@ -1,0 +1,20 @@
+{% extends "base/body.html" %}
+
+{% block title %}No encontrado - SIGMA{% endblock title %}
+
+{% block header %}
+<div class="error-page">
+  <h2 class="headline text-warning"> 404</h2>
+
+  <div class="error-content">
+    <h3><i class="fas fa-exclamation-triangle text-warning"></i> Error 404: <strong>NO ENCONTRADO</strong></h3>
+  </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<h6>Si ve este mensaje, puede tratarse por algunas de las siguientes causas</h6>
+<p>1. No se encontró la página que intenta buscar</p>
+<p>2. La consulta que intentó hacer, no se pudo procesar porque el registro no existe</p>
+<p>Revise la información e intente de nuevo</p>
+{% endblock content %}
