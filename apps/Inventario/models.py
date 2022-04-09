@@ -18,7 +18,7 @@ class Modelo(models.Model):
     timestamps=models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s'%(self.modelo)
+        return '%s %s'%(self.marca,self.modelo)
 
 class Elemento(models.Model):
     class Estado(models.TextChoices):
@@ -42,8 +42,8 @@ class Elemento(models.Model):
     fechaAdquisicion=models.DateField(verbose_name="Fecha de adquisición",auto_now=True)
     proveedor=models.ForeignKey(Proveedor,on_delete=models.SET_NULL,null=True,blank=True,verbose_name="Proveedor")
     modelo=models.ForeignKey(Modelo,on_delete=models.CASCADE,verbose_name="Referencia del elemento")
-    estado=models.CharField(choices=Estado.choices,default='Por Asignar', max_length=50)
-    tipoIngreso=models.CharField(choices=Ingresos.choices,default='Compra directa',max_length=150)
+    estado=models.CharField(choices=Estado.choices,default='Por Asignar', max_length=50,null=True,blank=True)
+    tipoIngreso=models.CharField(choices=Ingresos.choices,default='Compra directa',max_length=150,verbose_name="¿Cómo fue adquirido el elemento?")
     timestamps=models.DateTimeField(auto_now=True)
 
 
@@ -52,4 +52,4 @@ class Elemento(models.Model):
         verbose_name_plural ="Elementos"
 
     def __str__(self):
-        return '%s %s %s'%(self.placa,self.marca,self.modelo)
+        return '%s %s'%(self.placa,self.modelo)

@@ -58,7 +58,7 @@ class MarcaDelete(View):
         Marca.objects.get(id=ide).delete()
         return redirect('inventario:marcaIndex')
 
-
+#Operaciones con Elementos
 class ElementoListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     login_url='/auth/login'
     permission_required = 'Inventario.view_elemento'
@@ -71,4 +71,47 @@ class ElementoCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     model = Elemento
     form = elementoForm
     fields = ['Serial','conexionRed','ip','nombreRed','mac','valorAdquisicion','proveedor','modelo','estado','tipoIngreso']
-    template_name = "TEMPLATE_NAME"
+    template_name = "Inventario/Elementos/create.html"
+    def form_valid(self,form):
+        var = form.cleaned_data['ip']
+        if var:
+            q = form.cleaned_data['mac']
+            form.save()
+            query = Elemento.objects.get(mac=q)
+            query.conexionRed=True
+            query.save()
+            return redirect('inventario:elementoDetail',str(query.placa))
+        else:
+            q = form.cleaned_data['mac']
+            form.save()
+            query = Elemento.objects.get(mac=q)
+            form.save()
+            return redirect('inventario:elementoDetail',str(query.placa))
+
+class ElementoUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+    login_url='/auth/login'
+    permission_required  = 'Inventario.change_elemento'
+    model = Elemento
+    template_name="Inventario/Elementos/details.html"
+    form = elementoForm
+    fields = ['Serial','conexionRed','ip','nombreRed','mac','valorAdquisicion','proveedor','modelo','estado','tipoIngreso']
+    template_name = "Inventario/Elementos/details.html"
+    def form_valid(self,form):
+        var = form.cleaned_data['ip']
+        if var:
+            form.save()
+            query = Elemento.objects.get(ip=var)
+            query.conexionRed=True
+            query.save()
+            return redirect('inventario:elementoDetail',str(self.kwargs['pk']))
+        else:
+            form.save()
+            return redirect('inventario:elementoDetail',str(self.kwargs['pk']))
+
+class ElementoDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
+    login_url='/auth/login'
+    permission_required='Inventario.delete_elemento'
+    def get(self,request,**kwargs):
+        ide = self.kwargs['pk']
+        Elemento.objects.get(placa=ide).delete()
+        return redirect('inventario:elementoIndex')

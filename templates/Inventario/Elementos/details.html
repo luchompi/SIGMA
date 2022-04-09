@@ -1,0 +1,207 @@
+{% extends "base/body.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Detalles del elemento - SIGMA
+{% endblock title %}
+
+
+{% block header %}
+<link href="{% static 'select2.min.css' %}" rel="stylesheet" />
+    <h1>Datos del Elemento de placa {{object.placa}}</h1>
+{% endblock header %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <!-- Informacion del elemento -->
+            <div class="col">
+                <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Descripción del elemento</h3>
+                        </div>
+                        <div class="card-body">
+                            <h4>Datos Técnicos <i class="nav-icon fas  fa-list-alt"></i></h4>
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <th>Placa</th>
+                                    <th>Referencia</th>
+                                    <th>Nombre</th>
+                                    <th>Estado</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" >{{object.placa}} </th>
+                                        <td>{{object.modelo}}</td>
+                                        <td>{{object.nombreRed}}</td>
+                                        <td>{{object.estado}}</td>
+                                    </tr>
+                                                
+                                        </tbody>
+                                </table>
+                                <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <th>MAC</th>
+                                    <th>Serial</th>
+                                    <th>¿Está Conectado a la Red?</th>
+                                    <th>IP</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>{{object.mac}} </th>
+                                        <td>{{object.Serial}}</td>
+                                        {% if object.conexionRed %}
+                                            
+                                        <td>Sí</td>
+                                        {% else %}
+                                            <td>No</td>
+                                        {% endif %}
+                                        <td>{{object.ip}}</td>
+                                    </tr>
+                                                
+                                        </tbody>
+                                </table>
+                                <h4>Datos Adicionales <i class="nav-icon fas fa-plus-square"></i></h4>
+                                <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <th>Tipo de Ingreso</th>
+                                    <th>Proveedor</th>
+                                    <th>Valor de Adquisicion</th>
+                                    <th>Fecha de ingreso</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>{{object.tipoIngreso}} </th>
+                                        {% if object.proveedor %}
+                                            
+                                        <td>{{object.proveedor}}</td>
+                                        {% else %}
+                                            <td>No Existen datos</td>
+                                        {% endif %}
+                                        
+                                        {% if object.valorAdquisicion %}
+                                            
+                                        <td>$ {{object.valorAdquisicion}}</td>
+                                        {% else %}
+                                            <td>No Existen datos</td>
+                                        {% endif %}
+                                        <td>{{object.timestamps}}</td>
+                                    </tr>
+                                                
+                                        </tbody>
+                                </table>
+                        </div>
+                        <div class="card-footer">
+                            <p>Para eliminar este registro, haga clic en <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
+                Borrar
+              </button>
+                        </div>
+                    </div>
+            </div>
+            <!-- Formulario de Actualizacion -->
+            <div class="col">
+                <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Diligencie Datos del elemento</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="POST">
+                                {%csrf_token%}
+                                <div class="container">
+                        <h3>Formato de Actualización de datos</h3>
+                           <h4>Datos del Elemento <i class="nav-icon fas  fa-list-alt"></h4></i>
+                           <div class="row">{{form.modelo|as_crispy_field}}</div>
+                           <div class="row">
+                               <div class="col">
+                                   {{form.Serial|as_crispy_field}}
+                               </div>
+                               <div class="col">
+                                   {{form.mac|as_crispy_field}}
+                               </div>
+                           </div>
+                           <div class="row">
+                                <div class="col">
+                                    {{form.nombreRed|as_crispy_field}}                    
+                                </div>
+                                <div class="col">
+                                    {{form.ip|as_crispy_field}}
+                                </div>
+                           </div>
+                           <div class="row">
+                               <div class="col">
+                                   {{form.proveedor|as_crispy_field}}
+                               </div>
+                           </div>
+                           <h4>Datos adicionales <i class="nav-icon fas fa-plus-square"></h4></i>
+                           <div class="row">
+                               <div class="col">
+                                   {{form.valorAdquisicion|as_crispy_field}}
+                               </div>
+                           </div>
+                           <div class="row">
+                                   {{form.tipoIngreso|as_crispy_field}}
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-confirm">
+                                    Actualizar
+                                </button>
+                                <div class="modal fade" id="modal-confirm">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">Actualizar Funcionario</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <h4>Está a punto de Actualizar estos registros del sistema</h4>
+                                        <p>Tenga en cuenta que este proceso <strong>NO SE PUEDE DESHACER</strong></p>
+                                        <p>¿Continuar?</p>
+                                      <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Sí, Actualizar</a>
+                                      </div>
+                                      </form>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                  </div>
+                                  <!-- /.modal-dialog -->
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+         <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Borrar Funcionario</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Está a punto de eliminar este Elemento del sistema</h4>
+        <p>Tenga en cuenta que este proceso <strong>NO SE PUEDE DESHACER</strong></p>
+        <p>¿Continuar?</p>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancelar</button>
+        <a href="{% url 'inventario:elementoDelete' object.placa %}" class="btn btn-danger">Sí, Eliminar</a>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'dist/js/myJS/elementos.js' %}"></script>
+    <script src="{% static 'select2.min.js' %}"></script>
+{% endblock js %}

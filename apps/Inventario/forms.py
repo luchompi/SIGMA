@@ -1,17 +1,18 @@
 from django import forms
-
+from apps.Personas.models import Proveedor
+from .models import Modelo
 ESTADO=[
 ('pendiente','Por Asignar'),
 ('baja','En Proceso de Baja'),
-('activo','ACTIVO')
-('mantenimiento','En Mantenimiento')
+('activo','ACTIVO'),
+('mantenimiento','En Mantenimiento'),
 ]
 
 INGRESOS =[
 ('compra','Compra Directa'),
 ('donacion','Donacion'),
 ('transferencia','Transferencia tecnologica'),
-('traspaso','Traspaso de otra sede')
+('traspaso','Traspaso de otra sede'),
 ]
 
 class marcaForm(forms.Form):
@@ -27,7 +28,7 @@ class elementoForm(forms.Form):
 	nombreRed=forms.CharField()
 	mac=forms.CharField()
 	valorAdquisicion=forms.DecimalField()
-	proveedor=forms.Select(queryset=Proveedor.objects.all())
-	modelo=forms.select(queryset=Modelo.objects.all())
-	estado=forms.CharField(choices=ESTADO)
-	tipoIngreso=forms.CharField(choices=INGRESOS)
+	proveedor=forms.ModelChoiceField(queryset=Proveedor.objects.all())
+	modelo=forms.ModelChoiceField(queryset=Modelo.objects.all())
+	estado=forms.Select(choices=ESTADO)
+	tipoIngreso=forms.Select(choices=INGRESOS)
