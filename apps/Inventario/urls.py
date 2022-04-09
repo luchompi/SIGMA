@@ -14,4 +14,5 @@ path('elementos/',v.ElementoListView.as_view(),name="elementoIndex"),
 path('elementos/nuevo',v.ElementoCreateView.as_view(),name="elementoCreate"),
 path('elementos/detalles/<pk>',v.ElementoUpdateView.as_view(),name="elementoDetail"),
 path('elementos/eliminar/<pk>',v.ElementoDelete.as_view(),name="elementoDelete"),
+path('elementos/report?=general/',v.PDFGeneral.as_view(),name="PDFGral"),
 ]

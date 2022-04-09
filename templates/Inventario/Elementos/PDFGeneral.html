@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reporte General de elementos</title>
+</head>
+<body>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reporte de funcionario</title>
+	<link rel="stylesheet" href="{% static 'dist/fonts/font.css' %}">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+	<style>
+		body {font-family: arial;}
+		h1 {font-size: 20px;}
+		h2 {font-size: 18px;}
+		h3 {font-size: 15px;}
+		p {font-size: 15px;}
+		table, th, td {
+		  border: 1px solid black;
+		  font-size: 12px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 >Reporte de datos en sistema de Elementos</h1>
+		<hr class="dropdown-divider">
+		<p>Siendo el {{timestamps}}, a petición de la oficina de sistemas, se genera el reporte de elementos
+		añadidos al inventario general del Sistema Integrado para la Gestion por Modulos de Activos - SIGMA, en el que se especifican las placas, referencias y demas datos de interes.</p>
+		<h2>Datos de los elementos</h2>
+		<hr class="dropdown-divider">
+		<table class="table table-bordered border-primary">
+		  <thead>
+		  	<th>Placa</th>
+		  	<th>Referencia</th>
+		  	<th>MAC</th>
+		  	<th>Serial</th>
+		  	<th>IP</th>
+		  	<th>Proveedor</th>
+		  </thead>
+		  <tbody>
+		  	{% for row  in  query %}
+		  		<tr>
+		  		<td>
+		  			{{row.placa}}
+		  		</td>
+		  		<td>{{row.modelo}}</td>
+		  		<td>{{row.mac}}</td>
+		  		<td>{{row.Serial}}</td>
+		  		<td>{{row.ip}}</td>
+		  		<td>{{row.proveedor}}</td>
+		  	</tr>
+		  	{% endfor %}
+		  	
+		  </tbody>
+		</table>
+		<hr class="dropdown-divider">
+	<div class="container">
+		<div class="row">
+			
+		</div>
+		<div class="row">
+			<p>Para mayor informacion, pongase en contacto con la oficina de sistemas.</p>
+			reporte generado por {{usuario}}
+		</div>
+		<div class="row">
+			
+		</div>
+	</div>
+</body>
+</html>

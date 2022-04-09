@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block header %}
-    Listado General de Elementos <a href="{% url 'inventario:elementoCreate' %}" class="btn btn-primary">Añadir Nuevo</a>
+    Listado General de Elementos <a href="{% url 'inventario:elementoCreate' %}" class="btn btn-primary">Añadir Nuevo</a> <a href="{% url 'inventario:PDFGral' %}" class="btn btn-success" target="_blank">Generar PDF</a>
 {% endblock header %}
 
 {% block content %}

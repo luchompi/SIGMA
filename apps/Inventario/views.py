@@ -3,6 +3,10 @@ from .models import Marca,Modelo,Elemento
 from .forms import marcaForm,modeloForm,elementoForm
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.views.generic import ListView,CreateView,UpdateView,View,DetailView
+from datetime import datetime as dt
+from .utils import render_to_pdf
+from django.http import HttpResponse
+
 
 #Operaciones con Marcas
 class MarcaCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
@@ -115,3 +119,11 @@ class ElementoDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
         ide = self.kwargs['pk']
         Elemento.objects.get(placa=ide).delete()
         return redirect('inventario:elementoIndex')
+
+class PDFGeneral(LoginRequiredMixin,PermissionRequiredMixin,View):
+    login_url='/auth/login'
+    permission_required='Inventario.view_elemento'
+    def get(self,request,*args,**kwargs):
+        context = {'query': Elemento.objects.all(),'timestamps':dt.now(),'usuario':request.user,}
+        pdf = render_to_pdf('Inventario/Elementos/PDFGeneral.html', context)
+        return HttpResponse(pdf, content_type='application/pdf')
