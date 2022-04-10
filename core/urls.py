@@ -24,6 +24,7 @@ urlpatterns = [
     path('empresa/', include("apps.Empresa.urls",namespace="empresa")),
     path('personas/', include("apps.Personas.urls",namespace="personas")),
     path('inventario/', include("apps.Inventario.urls",namespace="inventario")),
+    path('gestion/', include("apps.Gestion.urls",namespace="gestion")),
     path('auth/', include("django.contrib.auth.urls")),
 ]
 handler404 = error.as_view()
