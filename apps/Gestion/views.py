@@ -1,4 +1,4 @@
-from cmath import log
+from datetime import datetime as dt
 from django.shortcuts import redirect, render
 from django.views.generic import ListView,CreateView,UpdateView,View
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
@@ -6,6 +6,8 @@ from apps.Inventario.models import Elemento
 from .models import Asignacion,DetallesAsignacion as DetalleModel
 from apps.Personas.models import Funcionario
 from .sessions import Asignacion as asig
+from .utils import render_to_pdf
+from django.http import HttpResponse
 
 class AsignacionListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
 	login_url='/auth/login'
@@ -97,3 +99,22 @@ class AsigQuery(LoginRequiredMixin,PermissionRequiredMixin,View):
 		'object_list':DetalleModel.objects.filter(asignacion=ide),
 		}
 		return render(request,'Gestion/Asignacion/AsigDetail.html',context)
+
+class PDF(LoginRequiredMixin,PermissionRequiredMixin,View):
+	login_url='/auth/login'
+	permission_required='Gestion.view_asignacion'
+	def get(self,request,**kwargs):
+		ide = self.kwargs['pk']
+		data = self.kwargs['iden']
+		query = Asignacion.objects.get(id=ide),
+		context = {
+		'query': query,
+		'funcionario':Funcionario.objects.get(identificacion=data),
+		'elementos':DetalleModel.objects.filter(asignacion_id=ide),
+		'timestamps':dt.now(),
+		'titulo':"Reporte de Asignacion con PID: "+ide,
+		'cuerpo':"De conformidad a lo consultado en los reportes del sistema de asginaciones, la oficina de sistemas reporta que en su haber, los siguientes elementos se encuentran asignados bajo las siguientes condiciones",
+		'noticia':"Esta notificacion se realiza con el proposito de informarle acerca de los elementos que usted tiene a su cargo, y por ende, establecer que en caso de presentarse alguna novedad con el elemento, usted se hace responsable sobre la perdida o robo del mismo, siempre y cuando se realice el respectivo denuncio sobre el mismo o, en caso contraro, que sistemas sea consciente sobre dicha novedad.",
+		'user':request.user.username,}
+		pdf = render_to_pdf('Gestion/Asignacion/PDF.html', context)
+		return HttpResponse(pdf, content_type='application/pdf')

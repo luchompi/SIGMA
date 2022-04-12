@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reporte de Asignacion</title>
+	<link rel="stylesheet" href="{% static 'dist/fonts/font.css' %}">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+	<style>
+		body {font-family: arial;}
+		h1 {font-size: 20px;}
+		h2 {font-size: 18px;}
+		h3 {font-size: 15px;}
+		p {font-size: 15px;}
+		th {font-size:  12px;
+			align-content: center;}
+		td {font-size: 12px;
+			align-content: center;}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 >{{titulo}}</h1>
+		<hr class="dropdown-divider">
+		<p>{{cuerpo}}</p>
+		<hr class="dropdown-divider">
+		<h2>Funcionario: {{funcionario.identificacion}} - {{funcionario.nombres}} {{funcionario.apellidos}}</h2>
+		<hr class="dropdown-divider">
+
+		<h2>Detalles</h2>
+		<table class="table table-bordered border-primary">
+		  <thead>
+		  	<th>Placa</th>
+		  	<th>Referencia</th>
+		  	<th>Estado</th>
+		  </thead>
+		  <tbody>
+		  	{% for row in elementos %}
+		  		<tr>
+			  		<td>
+			  			{{row.elemento.placa}}
+			  		</td>
+			  		<td>
+			  			{{row.elemento.modelo}}
+			  		</td>
+			  		<td>
+			  			{{row.elemento.estado}}
+			  		</td>
+			  	</tr>
+		  	{% endfor %}
+		  </tbody>
+		</table>
+		<p>{{noticia}}</p>
+	</div>
+</body>
+<footer align="bottom"><p>Reporte elaborado automaticamente el {{timestamps}} por {{user}}</p></footer>
+</html>
