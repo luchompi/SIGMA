@@ -14,4 +14,6 @@ path('asignaciones/cls/fc=&<iden>/',v.cancel.as_view(),name="cls2Session"),
 path('asignaciones/complete_fc=&<iden>/',v.successAsignacion.as_view(),name="successAsignacion"),
 path('asignaciones/view?_<pk>',v.AsigQuery.as_view(),name="AsigQuery"),
 path('asignaciones/report_single=&<pk>.<iden>',v.PDF.as_view(),name="PDFsingle"),
+
+path('traspasos/href_<pk>/<pid>',v.TraspasoIndex.as_view(),name="traspIndex"),
 ]

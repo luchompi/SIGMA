@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Reporte de Asignacion</title>
+	<title>Reporte de Asignacion - SIGMA</title>
 	<link rel="stylesheet" href="{% static 'dist/fonts/font.css' %}">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
@@ -33,7 +33,9 @@
 		<h2>Funcionario: {{funcionario.identificacion}} - {{funcionario.nombres}} {{funcionario.apellidos}}</h2>
 		<hr class="dropdown-divider">
 
-		<h2>Detalles</h2>
+		<h2>Detalles de Elementos Asignados</h2>
+		<hr class="dropdown-divider">
+
 		<table class="table table-bordered border-primary">
 		  <thead>
 		  	<th>Placa</th>
@@ -56,6 +58,7 @@
 		  	{% endfor %}
 		  </tbody>
 		</table>
+		<hr class="dropdown-divider">
 		<p>{{noticia}}</p>
 	</div>
 </body>

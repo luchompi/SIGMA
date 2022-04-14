@@ -27,6 +27,7 @@
         <th>Referencia del elemento</th>
         <th>Placa</th>
         <th>Timestamps</th>
+        <th>Opciones</th>
     </thead>
     <tbody>
 
@@ -35,7 +36,8 @@
                 <th scope="row" >{{row.asignacion.id}} </th>
                 <td>{{row.elemento.modelo}}</td>
                 <td>{{row.elemento.placa}}</td>
-                <td>{{row.timestamps}}</td>               
+                <td>{{row.timestamps}}</td>
+                <td><a href="{% url 'gestion:traspIndex' row.elemento.placa row.asignacion.id %}" class="btn btn-warning">Hacer Traspaso</a></td>               
             </tr>
             {% endfor %}
     </tbody>

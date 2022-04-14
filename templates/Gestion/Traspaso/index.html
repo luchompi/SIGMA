@@ -1,0 +1,96 @@
+{% extends "base/body.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+    Traspasos - SIGMA
+{% endblock title %}
+
+{% block header %}
+	<link href="{% static 'select2.min.css' %}" rel="stylesheet" />
+    <h1>Módulo de traspasos</h1>
+    <h5>Seleccione funcionario que recibirá el elemento</h5>
+{% endblock header %}
+
+{% block content %}
+    <div class="container-fluid">
+    	<div class="row">
+    		<div class="col">
+    			<div class="card card-primary">
+ 					 <div class="card-header">
+					    <h3 class="card-title">Datos del elemento</h3>
+					  </div>
+					  <!-- /.card-header -->
+					  <div class="card-body">
+						<table class="table table-striped table-hover table-bordered">
+						    <thead>
+						        <th>Palca</th>
+						        <th>Referencia del elemento</th>
+						        <th>Perteneciente a</th>
+						        <th>Fecha de asignacion</th>
+						       
+						    </thead>
+						    <tbody>						         
+						            <tr>
+						                <th scope="row" >{{elemento.placa}} </th>
+						                <td>{{elemento.modelo}}</td>
+						                <td>{{detalle.asignacion.funcionario}}</td>
+						                <td>{{detalle.asignacion.timestamps}}</td>                      
+						            </tr>
+						    </tbody>
+						</table>
+					  </div>
+					  <!-- /.card-body -->
+					</div>					
+			</div>
+			<div class="col">
+				<div class="card card-warning">
+ 					 <div class="card-header">
+					    <h3 class="card-title">Infomracíon del Traspaso</h3>
+					  </div>
+					  <!-- /.card-header -->
+					  <div class="card-body">
+						<h5>Indique funcionario que recibirá el elemento</h5>
+						<form method="POST">
+							{% csrf_token %}
+							{{form|crispy}}
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
+						        Hacer Traspaso
+						    </button>
+						    <div class="modal fade" id="modal-default">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h4 class="modal-title">Realizar Traspaso</h4>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        <h4>Está a punto de realizar esta operacion de traspaso</h4>
+							        <p>Tenga en cuenta que este proceso <strong>NO SE PUEDE DESHACER</strong></p>
+							        <p>¿Continuar?</p>
+							      <div class="modal-footer justify-content-between">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancelar</button>
+							        <button type="submit" class="btn btn-warning">Sí, continuar</button>
+							      </div>
+							      </form>
+							    </div>
+							    <!-- /.modal-content -->
+							  </div>
+							  <!-- /.modal-dialog -->
+							</div>
+						</form>
+					  </div>
+					  <!-- /.card-body -->
+					</div>					
+			</div>
+		</div>
+    </div>		
+
+{% endblock content %}
+
+
+{% block js %}
+    <script src="{% static 'dist/js/myJS/elementos.js' %}"></script>
+    <script src="{% static 'select2.min.js' %}"></script>
+{% endblock js %}
