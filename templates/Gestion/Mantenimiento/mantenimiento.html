@@ -1,0 +1,103 @@
+{% extends "base/body.html" %}
+
+{% block title %}
+    Mantenimientos - SIGMA
+{% endblock title %}
+
+{% block header %}
+    <h1>Modulo de mantenimientos - Detalles del Caso con PID {{query.PID}}</h1>
+{% endblock header %}
+
+{% block content %}
+<table class="table table-striped table-hover table-bordered">
+        <thead>
+            <th>PID</th>
+            <th>Elemento</th>
+            <th>Estado</th>
+            <th>Fecha de apertura</th>
+            <th>Fecha de cierre</th>
+        </thead>
+        <tbody>
+
+              
+                    {% if query.estado == "En Progreso" %}
+                        <tr class="table-warning">
+                            <th scope="row" >{{query.PID}} </th>
+                            <td>{{query.elemento}}</td>
+                            <td>{{query.estado}}</td>
+                            <td>{{query.timestamps}}</td>
+                            <td>Pendiente por Finalizar</td>
+                            
+                        </tr>
+                    {% elif query.estado == "Irreparable" %}
+                         <tr class="table-danger">
+                            <th scope="row" >{{query.PID}} </th>
+                            <td>{{query.elemento}}</td>
+                            <td>{{query.estado}}</td>
+                            <td>{{query.timestamps}}</td>
+                            <td>Finalizado, imposible reparar</td>
+                            
+                        </tr>
+                    {% else %}
+                         <tr >
+                            <th scope="row" >{{query.PID}} </th>
+                            <td>{{query.elemento}}</td>
+                            <td>{{query.estado}}</td>
+                            <td>{{query.timestamps}}</td>
+                            <td>Finalizado, Elemento OK</td>
+                           
+                        </tr>
+                    {% endif %}
+
+        </tbody>
+</table>
+<table class="table table-striped table-hover table-bordered">
+        <thead>
+            <th>Detalles del proceso</th>
+        </thead>
+        <tbody>
+
+              
+                    {% if query.estado == "En Progreso" %}
+                        <tr class="table-warning">
+                           <td>{{query.descripcion}}</td>
+                        </tr>
+                    {% elif query.estado == "Irreparable" %}
+                         <tr class="table-danger">
+                          <td>{{query.descripcion}}</td>
+                        </tr>
+                    {% else %}
+                         <tr >
+                            <td>{{query.descripcion}}</td>
+                        </tr>
+                    {% endif %}
+
+        </tbody>
+</table>
+ {% if query.estado == "Irreparable" or query.estado == "Finalizado" %}
+     <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <th>Observaciones</th>
+            <th>Elemento en Baja</th>
+        </thead>
+        <tbody>
+
+              {% if query.estado != "Irreparable" %}
+                    <tr >
+                    	<td>{{query.observaciones}}</td>
+                        
+                            <td>NO</td>
+                        {% else %}
+                    <tr class="table-danger">
+                        <td>{{query.observaciones}}</td>
+                        
+                            <td>SI</td>
+                        {% endif %}
+                    	
+                    </tr>
+
+        </tbody>
+</table>
+ 
+ {% endif %}
+{% endblock content %}

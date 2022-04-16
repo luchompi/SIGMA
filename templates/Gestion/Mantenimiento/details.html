@@ -1,0 +1,76 @@
+{% extends "base/body.html" %}
+
+{% block title %}
+    Mantenimientos - SIGMA
+{% endblock title %}
+
+{% block header %}
+    <h1>Mantenimientos - Historial de mantenimientos</h1>
+{% endblock header %}
+
+{% block content %}
+<h4>Elemento de placa {{obj.placa}} -  {{obj.modelo}}</h4>
+   <div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">Histroial de Mantenimientos - <a href="{% url 'mantenimiento:mantenimientoCreate' obj.placa %}" class="btn btn-success">Nuevo</a></h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+     {% if query %}
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <th>PID</th>
+            <th>Elemento</th>
+            <th>Estado</th>
+            <th>Fecha de apertura</th>
+            <th>Fecha de cierre</th>
+            <th>Opciones</th>
+        </thead>
+        <tbody>
+
+                {% for row in query  %}
+                    {% if row.estado == "En Progreso" %}
+                        <tr class="table-warning">
+                            <th scope="row" >{{row.PID}} </th>
+                            <td>{{row.elemento}}</td>
+                            <td>{{row.estado}}</td>
+                            <td>{{row.timestamps}}</td>
+                            <td>Pendiente por Finalizar</td>
+                            <td><a class="btn btn-info" href="{% url 'mantenimiento:mantenimientoRecord' row.PID %}">Explorar <i class="nav-icon fas  fa-search"></i></a>
+                                 <a class="btn btn-danger" href="{% url 'mantenimiento:cerrarCaso' row.PID %}">Cerrar Caso <i class="nav-icon fas  fa-search"></i></a>
+                            </td>
+                        </tr>
+                    {% elif row.estado == "Irreparable" %}
+                         <tr class="table-danger">
+                            <th scope="row" >{{row.PID}} </th>
+                            <td>{{row.elemento}}</td>
+                            <td>{{row.estado}}</td>
+                            <td>{{row.timestamps}}</td>
+                            <td>Finalizado, imposible reparar</td>
+                            <td><a class="btn btn-info" href="{% url 'mantenimiento:mantenimientoRecord' row.PID %}">Explorar <i class="nav-icon fas  fa-search"></i></a>
+                                
+                            </td>
+                        </tr>
+                    {% else %}
+                         <tr >
+                            <th scope="row" >{{row.PID}} </th>
+                            <td>{{row.elemento}}</td>
+                            <td>{{row.estado}}</td>
+                            <td>{{row.timestamps}}</td>
+                            <td>Finalizado, Elemento OK</td>
+                            <td><a class="btn btn-info" href="{% url 'mantenimiento:mantenimientoRecord' row.PID %}">Explorar <i class="nav-icon fas  fa-search"></i></a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <p>No Hay Registros de mantenimientos</p>
+    {% endif %}
+
+  </div>
+  
+</div>
+
+{% endblock content %}

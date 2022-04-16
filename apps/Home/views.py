@@ -9,6 +9,8 @@ class Home(LoginRequiredMixin,TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['disponible'] = Elemento.objects.filter(estado='Por Asignar').count()
+        context['mantenimiento'] = Elemento.objects.filter(estado='En mantenimiento').count()
+        context['baja'] = Elemento.objects.filter(estado='En Proceso de Baja').count()
         return context
 
 class error(LoginRequiredMixin,TemplateView):

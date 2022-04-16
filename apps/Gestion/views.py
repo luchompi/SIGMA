@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import ListView,CreateView,UpdateView,View
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from apps.Inventario.models import Elemento
-from .models import Asignacion,DetallesAsignacion as DetalleModel,Traspaso,DetallesTraspaso as DetalleTraspasoModel
+from .models import Asignacion,DetallesAsignacion as DetalleModel
 from apps.Personas.models import Funcionario
 from .sessions import Asignacion as asig
 from .utils import render_to_pdf
