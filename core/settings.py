@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'apps.Inventario',
     'apps.Gestion',
     'apps.Mantenimiento',
-    #'apps.Bajas',
+    'apps.Bajas',
 ]
 
 MIDDLEWARE = [
