@@ -45,7 +45,7 @@ class Elemento(models.Model):
     estado=models.CharField(choices=Estado.choices,default='Por Asignar', max_length=50,null=True,blank=True)
     tipoIngreso=models.CharField(choices=Ingresos.choices,default='Compra directa',max_length=150,verbose_name="¿Cómo fue adquirido el elemento?")
     timestamps=models.DateTimeField(auto_now=True)
-
+    autorizado = models.BooleanField(default=False)
 
     class Meta:
         verbose_name ="Elemento"

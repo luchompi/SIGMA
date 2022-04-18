@@ -13,5 +13,6 @@ class DetalleBaja(models.Model):
 	elemento = models.ForeignKey(Elemento,on_delete=models.CASCADE)
 	autorizado = models.BooleanField(default=True)
 	timestamps = models.DateTimeField(auto_now=True)
+	fechaBorrado = models.DateField()
 	def __str__(self):
 			return '%s %s'%(self.baja,self.elemento)

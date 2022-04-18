@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.Inventario.models import Elemento
+from apps.Bajas.models import DetalleBaja as DetalleModel
+from datetime import date as dt,timedelta
 # Create your views here.
 class Home(LoginRequiredMixin,TemplateView):
     login_url='/auth/login'
@@ -11,6 +13,11 @@ class Home(LoginRequiredMixin,TemplateView):
         context['disponible'] = Elemento.objects.filter(estado='Por Asignar').count()
         context['mantenimiento'] = Elemento.objects.filter(estado='En mantenimiento').count()
         context['baja'] = Elemento.objects.filter(estado='En Proceso de Baja').count()
+        queryset = DetalleModel.objects.all()
+        date = dt.today()
+        for element in queryset:
+            if element.fechaBorrado <= date:
+                Elemento.objects.get(placa=element.elemento_id).delete()
         return context
 
 class error(LoginRequiredMixin,TemplateView):

@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixi
 from django.views.generic import View
 from .models import Baja, DetalleBaja as DetalleModel
 from apps.Inventario.models import Elemento
+from datetime import datetime as dt,date as d, timedelta
 from .sessions import baja
 # Create your views here.
 class BajaIndex(LoginRequiredMixin,PermissionRequiredMixin,View):
@@ -10,7 +11,7 @@ class BajaIndex(LoginRequiredMixin,PermissionRequiredMixin,View):
 	permission_required='Bajas.view_baja'
 	def get(self,request,**kwargs):
 		context = {
-		'query':Elemento.objects.filter(estado="En Proceso de Baja")
+		'query':Elemento.objects.filter(estado="En Proceso de Baja",autorizado = False)
 		}
 		return render(request,'Gestion/Baja/index.html',context)
 
@@ -53,7 +54,13 @@ class done(LoginRequiredMixin,PermissionRequiredMixin,View):
 		q = Baja.objects.filter(user=request.user).latest('timestamps')
 		for row in obj.keys():
 			placa=obj[row]["placa"]
-			DetalleModel.objects.create(elemento_id=placa,baja=q)
+			a = d.today()
+			date = a + timedelta(days=15)
+			print(date)
+			c =Elemento.objects.get(placa=placa)
+			c.autorizado = True
+			c.save()
+			DetalleModel.objects.create(elemento_id=placa,baja=q,fechaBorrado=date)
 		b.clear()
 		return redirect('bajas:BajaIndex')
 

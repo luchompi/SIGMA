@@ -7,7 +7,6 @@ from datetime import datetime as dt
 from .utils import render_to_pdf
 from django.http import HttpResponse
 
-
 #Operaciones con Marcas
 class MarcaCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     login_url='/auth/login'
